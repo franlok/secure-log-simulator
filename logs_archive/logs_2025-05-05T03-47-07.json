@@ -1,0 +1,25 @@
+[
+    {
+        "id": "7b78b63dc015bc924f7920a3f62ab98ee85291c83a00ee27419c40c4829b5ff6",
+        "encrypted_log": "gAAAAABoF8JO71KQ0tCAyyGbH0Us1-eaqSSULVDVfKnVLkg32NWR5XQUFOmZaLXZpJz4QQXc3xRqWBgoHtc4HqETiLS20roaTJhoJJYOJvkSsC6gYKJW14I=",
+        "mac": "c5c2481ac816585af4be9280c6ac7e08ceda61aca88e42118804473543aff2bf",
+        "prev_mac": ""
+    },
+    {
+        "id": "d1a133db8eec30e5cc32ac46210c7e06a1bbcf0b484c526ad8a16cde8cfd4f4b",
+        "encrypted_log": "gAAAAABoF8JSl9URinV_WtvRnzAKSO1QLzoHw5zWEkYARgsoLGFS-fG4NTvSzD-3QdnQ-wyLwaMPXAUI_il9NeN-t35THAyJ-K3h1YkdQaU9vIokYEJ2YjY=",
+        "mac": "9f22c87c3627564e64aa70e02ebf3691813d5be5d5ecf8de8798c56ded11d660",
+        "prev_mac": "c5c2481ac816585af4be9280c6ac7e08ceda61aca88e42118804473543aff2bf"
+    },
+    {
+        "id": "bcdcdcfa8633fa8987a579f55cedce97e79b60e9fa35162f78aa4690fc3f9748",
+        "encrypted_log": "gAAAAABoF8JYGaZ9cK_GdrEZr-LqZc331WllhOf4YLT0SzSr9iWVTn1WX4BgIq-x5qq8-TqcEEXDTx18e9G03ClazELm1flDX19ViYT9cT6lHwOTcwTLcmk=",
+        "mac": "420d111531a5c55288cedad2995c9326cd122bd0b4b86e5f3cbb8c131c49887a",
+        "prev_mac": "9f22c87c3627564e64aa70e02ebf3691813d5be5d5ecf8de8798c56ded11d660"
+    },
+    {
+        "type": "LogClose",
+        "timestamp": "2025-05-05T03:39:17.424595",
+        "final_mac": "2845334f7e11ce73f0a5c5f18b21f2e8a692d096403f8751d7619f491f9684f1"
+    }
+]
