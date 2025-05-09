@@ -287,46 +287,62 @@ elif page == "Verifier Role":
 elif page == "Simulate Upload":
     st.header("📤 Simulate Upload to Untrusted Cloud")
 
-    if st.button("🛰 Upload current logs.json to fake cloud"):
-        if not os.path.exists("logs_cloud"):
-            os.makedirs("logs_cloud")
-        shutil.copy(LOG_FILE, "logs_cloud/cloud_copy.json")
-        st.success("✅ Simulated upload complete!")
-        st.caption("File saved as logs_cloud/cloud_copy.json")
+    if st.button("🛰 Upload latest sealed archive to fake cloud"):
+        archive_path = None
+        if os.path.exists(ARCHIVE_FOLDER):
+            archive_files = [
+                f for f in os.listdir(ARCHIVE_FOLDER)
+                if f.startswith("logs_") and f.endswith(".json")
+            ]
+            if archive_files:
+                latest = sorted(archive_files, reverse=True)[0]
+                archive_path = os.path.join(ARCHIVE_FOLDER, latest)
+
+        if archive_path and os.path.exists(archive_path):
+            if not os.path.exists("logs_cloud"):
+                os.makedirs("logs_cloud")
+            cloud_path = os.path.join("logs_cloud", f"cloud_copy_{latest}")
+            shutil.copy(archive_path, cloud_path)
+            st.success("✅ Simulated upload complete!")
+            st.caption(f"Stored in: {cloud_path}")
+        else:
+            st.error("❌ No sealed log archive found to upload.")
+
 
 if page == "📖 Help / Demo Guide":
-    st.header("📖 Demo Guide & Feature Summary")
+    st.header("📖 How to Use This Secure Logging Demo")
 
     st.markdown("""
-    This simulation demonstrates core concepts from the **Log-as-a-Service (LaaS)** model:
+    Welcome! This tool is a simulation of a **Log-as-a-Service (LaaS)** system — where secure logs are created, sealed, and verified even on untrusted cloud platforms.
 
-    ### 🔐 Cryptographic Features:
-    - **AES Encryption (Fernet)**: Keeps log content confidential.
-    - **MAC Chaining**: Prevents reordering/deletion of logs by linking each MAC.
-    - **HMAC-based Log IDs**: Ensures each log has a unique identifier.
+    ### 🔐 Key Security Features:
+    - **AES Encryption (Fernet)**: Your log messages are fully encrypted for confidentiality.
+    - **MAC Chaining**: Every log is cryptographically linked to the one before it — tampering breaks the chain.
+    - **HMAC-based Log IDs**: Every log has a unique, verifiable ID to prevent forgery.
 
-    ### 📦 Session Features:
-    - **Log Close Record**: Seals the log batch with a final MAC for audit completeness.
-    - **Start New Session**: Archives old logs and begins fresh logging.
+    ### 📦 Logging Workflow:
+    - **Close Log Batch**: Once logs are written, you "seal" them. This prevents any further changes.
+    - **Start New Session**: Begin a fresh batch after archiving the previous one for clean logging.
 
-    ### 🧪 Simulation Tools:
-    - **Tamper Simulation**: Manually corrupt a log and verify MAC failure.
-    - **Verifier Role**: Auditor can validate MACs without decrypting logs.
-    - **Simulate Upload**: Pretend to send logs to untrusted cloud storage.
-    - **Archived Logs Viewer**: Load and verify previously sealed log batches.
+    ### 🧪 Interactive Features You Can Try:
+    - **Tamper Simulation**: See what happens if someone tries to alter a log (spoiler: we catch them).
+    - **Verifier Role**: Try being an auditor — check log integrity **without** seeing the actual content.
+    - **Simulate Upload**: Emulates sending logs to the cloud. The logs stay secure and verifiable.
+    - **Archived Logs Viewer**: Browse old sealed batches and verify they are still tamper-free.
 
     ---
-    ### 🧠 Suggested Demo Flow:
-    1. Add a few logs.
-    2. Seal the batch.
-    3. Try to add more logs → should be blocked.
-    4. Tamper a log → check "View Logs" to see MAC failure.
-    5. Use "Verifier Role" to simulate cloud-side MAC validation.
-    6. Archive the batch and start a new one.
-    7. Use "Simulate Upload" to show untrusted cloud delegation.
-    8. View sealed logs using "View Archived Logs".
+    ### 🧠 Suggested Walkthrough (Try These Steps!)
+    1. 🔐 Add a few secure log messages.
+    2. 📦 Seal the batch — this locks the log set.
+    3. 🚫 Try adding another log — it will be blocked.
+    4. 🐞 Tamper with a log — and observe how the system detects it.
+    5. 🔍 Use Verifier Role — check integrity without decrypting anything.
+    6. 📁 Archive and start a new session — logs are saved safely.
+    7. ☁️ Simulate a cloud upload — logs copied to a “cloud” folder.
+    8. 🧾 View an older batch — and verify its integrity.
 
     """)
 
-    st.success("✅ Use this guide during your presentation or testing.")
+    st.success("✅ You can follow the steps above to explore how secure logs behave in a zero-trust environment!")
+
 
